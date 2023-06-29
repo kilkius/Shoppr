@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
+  <div class="card text-end p-5 m-4">
+    <div class="card-body">
+        <h1 class="card-title">Hi {{ name }},</h1>
+        <h2>today you spent:</h2>
+      {% if today_zero == None %}
+        <h1>€0.00</h1>
+      {% else %}
+        <h1 class="total">€{{ "%.2f"|format(today[0].today) }}</h1>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card text-end p-5 m-4">
+    <div class="card-body">
+      <h5 class="card-title">Amount spent <br>in the last {{ days }} days:</h5>
+      <p class="card-text">
+      {% if zero == None %}
+        <h1>€0.00</h1>
+      {% else %}
+        <h1 class="total">€{{ "%.2f"|format(data[0].price) }}</h1>
+      {% endif %}
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<h2></h2>
+
+
+{% endblock %}

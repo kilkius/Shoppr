@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center brand">Shoppr</h1>
+
+<form action="/login" method="post">
+    <input autofocus class="form-control mx-auto w-auto mb-2" type="text" autocomplete="off" name="user" id="user" placeholder="User">
+    <input class="form-control mx-auto w-auto mb-2" type="password" name="password" id="password" placeholder="Password">
+    <button class="btn btn-primary">Login</button>
+</form>
+
+{% endblock %}

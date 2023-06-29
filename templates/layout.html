@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
+    <link href="static/style.css" rel="stylesheet"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Shoppr | {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <!-- TODO nav for login and nav for logged in -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          {% if session["user_id"] %}
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg></span>
+          </button>
+          {% endif %}
+
+          {% if session["user_id"] %}
+
+            <a class="navbar-brand" href="/"><p id="branding">Shoppr</p></a>
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-link" href="/">Overview</a>
+                <a class="nav-link" href="/shopping_list">Shopping list</a>
+                <a class="nav-link" href="/add_items">Database</a>
+                <a class="nav-link" href="/receipts">Receipts</a>
+              </div>
+            </div>
+          {% endif %}
+
+        
+          {% if session["user_id"] %}
+            <a class="btn btn-outline-primary" href="/logout">Logout</a>
+          {% else %}
+          <div>
+            <a class="btn btn-outline-primary" href="/login">Login</a>
+            <a class="btn btn-primary" href="/register">Register</a>
+          </div>
+          {% endif %}
+
+        </div>
+    </nav>
+
+    <!-- TODO flash messages in header -->
+    {% if get_flashed_messages() %}
+    <header>
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="container-fluid py-5 text-center">{% block body %}{% endblock %}</main>
+
+    <footer class="mb-5 small text-center text-muted">
+        Copyright &copy; 2023 Ignas Kilkius
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+      let input = document.getElementById("check_item")
+      input.addEventListener("input", async function(){
+        let response = await fetch("search?q=" + input.value);
+        let products = await response.text();
+        document.getElementById("product_list").innerHTML = products;
+      });
+    </script>
+  </body>
+</html>
